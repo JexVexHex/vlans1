@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tiny VLAN Tutorial™</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main class="container">
+        <header class="hero">
+            <h1 class="title">Tiny VLAN Tutorial™</h1>
+            <p class="subtitle">VLANs, 802.1Q tags, and basic Cisco commands — interactive guide</p>
+        </header>
+
+        <section id="progress" class="progress-wrap" aria-hidden="false">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <span class="progress-fill" style="width:0%"></span>
+            </div>
+            <div class="progress-label">Progress: <span id="progressPercent">0%</span></div>
+        </section>
+
+        <section class="content" id="lesson">
+            <article class="card animated" data-step="1">
+                <h2>What is a VLAN?</h2>
+                <p>VLANs partition a single physical switch into multiple logical networks, each with its own broadcast
+                    domain.</p>
+            </article>
+
+            <article class="card animated" data-step="2">
+                <h2>802.1Q VLAN Tag (high level)</h2>
+                <p>802.1Q inserts a 4-byte tag into Ethernet frames to carry the VLAN ID. Tag fields include TPID
+                    (0x8100) and TCI (PCP, DEI, VID).</p>
+                <pre class="code">TPID: 0x8100 | TCI: PCP(3) DEI(1) VID(12)</pre>
+            </article>
+
+            <article class="card animated" data-step="3">
+                <h2>Access vs Trunk</h2>
+                <p><strong>Access</strong> — single VLAN per port. <strong>Trunk</strong> — carries multiple VLANs
+                    between switches (802.1Q tagging).</p>
+            </article>
+
+            <article class="card animated" data-step="4">
+                <h2>Sample Cisco Commands</h2>
+                <ol>
+                    <li>Create VLAN: <code>vlan 10</code></li>
+                    <li>Assign access port: <code>switchport mode access</code> + <code>switchport access vlan 10</code>
+                    </li>
+                    <li>Configure trunk: <code>switchport mode trunk</code> +
+                        <code>switchport trunk encapsulation dot1q</code></li>
+                </ol>
+            </article>
+
+            <section class="card problems" data-step="5">
+                <h2>Problems</h2>
+                <div class="problem">
+                    <label>1) If host A (VLAN 10) and host B (VLAN 20) are on the same switch, will they ARP each other
+                        by default?</label>
+                    <div class="options">
+                        <button class="btn small" data-answer="no">No — different VLANs</button>
+                        <button class="btn small" data-answer="yes">Yes — same broadcast domain</button>
+                    </div>
+                    <div class="feedback" aria-live="polite"></div>
+                </div>
+                <div class="problem">
+                    <label>2) Which command ensures only VLANs 10 and 20 cross a trunk?</label>
+                    <input placeholder="Type command here" id="trunkCmd" />
+                    <button class="btn" id="checkTrunk">Check</button>
+                    <div class="feedback" aria-live="polite"></div>
+                </div>
+            </section>
+
+            <section class="card quiz" data-step="6">
+                <h2>Quick Quiz</h2>
+                <div id="quizRoot"></div>
+                <div class="quiz-controls">
+                    <button class="btn" id="prevQ">Previous</button>
+                    <button class="btn primary" id="nextQ">Next</button>
+                    <button class="btn success" id="submitQuiz">Submit Quiz</button>
+                </div>
+                <div id="quizResult" class="result" aria-live="polite"></div>
+            </section>
+
+        </section>
+
+        <footer class="footer">
+            <small>Made with ❤️ — Tiny Tutorial™</small>
+        </footer>
+    </main>
+
+    <script src="app.js" defer></script>
+</body>
+
+</html>
