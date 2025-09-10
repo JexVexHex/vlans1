@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tiny VLAN Tutorial™</title>
+    <title>Tiny VLAN Tutorial™ - Comprehensive Guide</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -12,81 +12,431 @@
     <main class="container">
         <header class="hero">
             <h1 class="title">Tiny VLAN Tutorial™</h1>
-            <p class="subtitle">VLANs, 802.1Q tags, and basic Cisco commands — interactive guide</p>
+            <p class="subtitle">A Comprehensive Interactive Guide to Virtual Local Area Networks</p>
+            <div class="hero-stats">
+                <span>10 Lessons</span> • <span>4 Labs</span> • <span>15 Quiz Questions</span>
+            </div>
         </header>
 
-        <section id="progress" class="progress-wrap" aria-hidden="false">
+        <section id="progress" class="progress-wrap">
             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                 <span class="progress-fill" style="width:0%"></span>
             </div>
             <div class="progress-label">Progress: <span id="progressPercent">0%</span></div>
         </section>
 
-        <section class="content" id="lesson">
-            <article class="card animated" data-step="1">
-                <h2>What is a VLAN?</h2>
-                <p>VLANs partition a single physical switch into multiple logical networks, each with its own broadcast
-                    domain.</p>
-            </article>
+        <nav class="lesson-nav">
+            <a href="#lesson1" class="btn lesson-btn" data-lesson="1">Fundamentals</a>
+            <a href="#lesson2" class="btn lesson-btn" data-lesson="2">Broadcast Domains</a>
+            <a href="#lesson3" class="btn lesson-btn" data-lesson="3">802.1Q Tagging</a>
+            <a href="#lesson4" class="btn lesson-btn" data-lesson="4">Access vs Trunk</a>
+            <a href="#lesson5" class="btn lesson-btn" data-lesson="5">Native VLAN</a>
+            <a href="#lesson6" class="btn lesson-btn" data-lesson="6">Cisco Config</a>
+            <a href="#lesson7" class="btn lesson-btn" data-lesson="7">Inter-VLAN</a>
+            <a href="#lesson8" class="btn lesson-btn" data-lesson="8">Best Practices</a>
+            <a href="#lesson9" class="btn lesson-btn" data-lesson="9">Troubleshooting</a>
+            <a href="#lesson10" class="btn lesson-btn" data-lesson="10">Labs & Quiz</a>
+        </nav>
 
-            <article class="card animated" data-step="2">
-                <h2>802.1Q VLAN Tag (high level)</h2>
-                <p>802.1Q inserts a 4-byte tag into Ethernet frames to carry the VLAN ID. Tag fields include TPID
-                    (0x8100) and TCI (PCP, DEI, VID).</p>
-                <pre class="code">TPID: 0x8100 | TCI: PCP(3) DEI(1) VID(12)</pre>
-            </article>
+        <section class="content" id="lessonContent">
 
-            <article class="card animated" data-step="3">
-                <h2>Access vs Trunk</h2>
-                <p><strong>Access</strong> — single VLAN per port. <strong>Trunk</strong> — carries multiple VLANs
-                    between switches (802.1Q tagging).</p>
-            </article>
+            <!-- Lesson 1: VLAN Fundamentals -->
+            <article class="lesson" id="lesson1" data-lesson="1">
+                <div class="card animated">
+                    <h2>🎯 Lesson 1: VLAN Fundamentals</h2>
+                    <div class="lesson-content">
+                        <h3>What is a VLAN?</h3>
+                        <p>A <strong>Virtual Local Area Network (VLAN)</strong> is a logical subdivision of a physical
+                            network that creates separate broadcast domains.</p>
 
-            <article class="card animated" data-step="4">
-                <h2>Sample Cisco Commands</h2>
-                <ol>
-                    <li>Create VLAN: <code>vlan 10</code></li>
-                    <li>Assign access port: <code>switchport mode access</code> + <code>switchport access vlan 10</code>
-                    </li>
-                    <li>Configure trunk: <code>switchport mode trunk</code> +
-                        <code>switchport trunk encapsulation dot1q</code></li>
-                </ol>
-            </article>
+                        <div class="concept-box">
+                            <h4>Key Benefits</h4>
+                            <ul>
+                                <li><strong>Broadcast Domain Isolation</strong>: Reduces network congestion</li>
+                                <li><strong>Enhanced Security</strong>: Isolates sensitive traffic</li>
+                                <li><strong>Improved Performance</strong>: Smaller broadcast domains</li>
+                                <li><strong>Flexible Design</strong>: Logical grouping regardless of location</li>
+                                <li><strong>Cost Efficiency</strong>: Multiple logical networks on one switch</li>
+                            </ul>
+                        </div>
 
-            <section class="card problems" data-step="5">
-                <h2>Problems</h2>
-                <div class="problem">
-                    <label>1) If host A (VLAN 10) and host B (VLAN 20) are on the same switch, will they ARP each other
-                        by default?</label>
-                    <div class="options">
-                        <button class="btn small" data-answer="no">No — different VLANs</button>
-                        <button class="btn small" data-answer="yes">Yes — same broadcast domain</button>
+                        <h3>VLAN Types</h3>
+                        <div class="vlan-types">
+                            <div class="vlan-type">
+                                <strong>Data VLANs</strong>: User-generated traffic
+                            </div>
+                            <div class="vlan-type">
+                                <strong>Voice VLANs</strong>: VoIP traffic with QoS
+                            </div>
+                            <div class="vlan-type">
+                                <strong>Management VLANs</strong>: Administrative access
+                            </div>
+                            <div class="vlan-type">
+                                <strong>Native VLANs</strong>: Untagged trunk traffic
+                            </div>
+                        </div>
                     </div>
-                    <div class="feedback" aria-live="polite"></div>
                 </div>
-                <div class="problem">
-                    <label>2) Which command ensures only VLANs 10 and 20 cross a trunk?</label>
-                    <input placeholder="Type command here" id="trunkCmd" />
-                    <button class="btn" id="checkTrunk">Check</button>
-                    <div class="feedback" aria-live="polite"></div>
-                </div>
-            </section>
+            </article>
 
-            <section class="card quiz" data-step="6">
-                <h2>Quick Quiz</h2>
-                <div id="quizRoot"></div>
-                <div class="quiz-controls">
-                    <button class="btn" id="prevQ">Previous</button>
-                    <button class="btn primary" id="nextQ">Next</button>
-                    <button class="btn success" id="submitQuiz">Submit Quiz</button>
+            <!-- Lesson 2: Broadcast Domains -->
+            <article class="lesson" id="lesson2" data-lesson="2">
+                <div class="card animated">
+                    <h2>📡 Lesson 2: Broadcast Domains & Layer 2 Switching</h2>
+                    <div class="lesson-content">
+                        <h3>Without VLANs vs With VLANs</h3>
+
+                        <div class="comparison">
+                            <div class="comparison-item">
+                                <h4>Traditional Network</h4>
+                                <p>All ports = one broadcast domain<br>
+                                    Broadcasts reach every device<br>
+                                    No logical separation</p>
+                            </div>
+                            <div class="comparison-item">
+                                <h4>VLAN Network</h4>
+                                <p>Each VLAN = separate broadcast domain<br>
+                                    Broadcasts contained within VLAN<br>
+                                    Logical separation enforced</p>
+                            </div>
+                        </div>
+
+                        <div class="example-scenario">
+                            <h4>Example: 24-Port Switch</h4>
+                            <pre class="code">Ports 1-8:   VLAN 10 (Sales)
+Ports 9-16:  VLAN 20 (Engineering)  
+Ports 17-24: VLAN 30 (Management)</pre>
+                        </div>
+                    </div>
                 </div>
-                <div id="quizResult" class="result" aria-live="polite"></div>
-            </section>
+            </article>
+
+            <!-- Lesson 3: 802.1Q Tagging -->
+            <article class="lesson" id="lesson3" data-lesson="3">
+                <div class="card animated">
+                    <h2>🏷️ Lesson 3: IEEE 802.1Q VLAN Tagging</h2>
+                    <div class="lesson-content">
+                        <h3>VLAN Tag Structure</h3>
+                        <div class="tag-structure">
+                            <div class="frame-diagram">
+                                <div class="frame-part">Dest MAC</div>
+                                <div class="frame-part">Src MAC</div>
+                                <div class="frame-part highlight">VLAN Tag</div>
+                                <div class="frame-part">EtherType</div>
+                                <div class="frame-part">Data</div>
+                                <div class="frame-part">FCS</div>
+                            </div>
+                        </div>
+
+                        <h3>VLAN Tag Fields (4 bytes)</h3>
+                        <div class="tag-fields">
+                            <div class="field">
+                                <strong>TPID (2 bytes)</strong><br>
+                                Value: 0x8100<br>
+                                <small>Indicates 802.1Q tag</small>
+                            </div>
+                            <div class="field">
+                                <strong>TCI (2 bytes)</strong><br>
+                                PCP (3 bits): QoS priority<br>
+                                DEI (1 bit): Drop eligible<br>
+                                VID (12 bits): VLAN ID (1-4094)
+                            </div>
+                        </div>
+
+                        <h3>VLAN ID Ranges</h3>
+                        <pre class="code">0:         Not used
+1:         Default VLAN  
+2-1001:    Normal range VLANs
+1002-1005: Legacy protocols
+1006-4094: Extended range
+4095:      Reserved</pre>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Lesson 4: Access vs Trunk -->
+            <article class="lesson" id="lesson4" data-lesson="4">
+                <div class="card animated">
+                    <h2>🔗 Lesson 4: Access vs Trunk Ports</h2>
+                    <div class="lesson-content">
+                        <div class="port-comparison">
+                            <div class="port-type">
+                                <h3>Access Ports</h3>
+                                <ul>
+                                    <li>Connect end devices</li>
+                                    <li>Carry ONE VLAN only</li>
+                                    <li>Send/receive untagged frames</li>
+                                    <li>Add tags when forwarding to trunk</li>
+                                </ul>
+                                <div class="use-case">
+                                    <strong>Use:</strong> PCs, printers, servers, APs
+                                </div>
+                            </div>
+                            <div class="port-type">
+                                <h3>Trunk Ports</h3>
+                                <ul>
+                                    <li>Connect switches/routers</li>
+                                    <li>Carry MULTIPLE VLANs</li>
+                                    <li>Use VLAN tags to identify traffic</li>
+                                    <li>Native VLAN traffic untagged</li>
+                                </ul>
+                                <div class="use-case">
+                                    <strong>Use:</strong> Inter-switch links, router connections
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Frame Handling Example</h3>
+                        <pre class="code">Access Port: PC → Switch (untagged) → Add tag → Trunk
+Trunk Port:  Switch A → Tagged frames → Switch B → Remove tag</pre>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Lesson 5: Native VLAN -->
+            <article class="lesson" id="lesson5" data-lesson="5">
+                <div class="card animated">
+                    <h2>🛡️ Lesson 5: Native VLAN & Security</h2>
+                    <div class="lesson-content">
+                        <h3>Native VLAN Concept</h3>
+                        <p>The <strong>Native VLAN</strong> handles untagged traffic on trunk ports.</p>
+                        <ul>
+                            <li>Default: VLAN 1 on Cisco switches</li>
+                            <li>Native VLAN frames sent untagged across trunk</li>
+                            <li>Both trunk ends must have same native VLAN</li>
+                        </ul>
+
+                        <div class="security-warning">
+                            <h4>⚠️ Security Risks</h4>
+                            <ul>
+                                <li>VLAN 1 is default native VLAN</li>
+                                <li>Management traffic often uses VLAN 1</li>
+                                <li>Potential for VLAN hopping attacks</li>
+                            </ul>
+                        </div>
+
+                        <div class="best-practices">
+                            <h4>✅ Best Practices</h4>
+                            <ol>
+                                <li>Change native VLAN from default VLAN 1</li>
+                                <li>Use unused VLAN as native (e.g., VLAN 99)</li>
+                                <li>Don't assign access ports to native VLAN</li>
+                                <li>Configure native VLAN consistently on both ends</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Lesson 6: Cisco Configuration -->
+            <article class="lesson" id="lesson6" data-lesson="6">
+                <div class="card animated">
+                    <h2>⚙️ Lesson 6: Cisco VLAN Configuration</h2>
+                    <div class="lesson-content">
+                        <h3>Basic VLAN Creation</h3>
+                        <pre class="code">Switch> enable
+Switch# configure terminal
+Switch(config)# vlan 10
+Switch(config-vlan)# name SALES
+Switch(config-vlan)# exit</pre>
+
+                        <h3>Access Port Configuration</h3>
+                        <pre class="code">Switch(config)# interface range FastEthernet0/1-8
+Switch(config-if-range)# switchport mode access
+Switch(config-if-range)# switchport access vlan 10
+Switch(config-if-range)# spanning-tree portfast
+Switch(config-if-range)# no shutdown</pre>
+
+                        <h3>Trunk Port Configuration</h3>
+                        <pre class="code">Switch(config)# interface GigabitEthernet0/1
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk encapsulation dot1q
+Switch(config-if)# switchport trunk native vlan 99
+Switch(config-if)# switchport trunk allowed vlan 10,20,99</pre>
+
+                        <h3>Verification Commands</h3>
+                        <pre class="code">show vlan brief
+show interfaces trunk
+show interfaces Fa0/1 switchport
+show mac address-table vlan 10</pre>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Lesson 7: Inter-VLAN Routing -->
+            <article class="lesson" id="lesson7" data-lesson="7">
+                <div class="card animated">
+                    <h2>🛣️ Lesson 7: Inter-VLAN Routing</h2>
+                    <div class="lesson-content">
+                        <h3>Why Inter-VLAN Routing?</h3>
+                        <p>VLANs create separate broadcast domains. Devices in different VLANs cannot communicate
+                            without a router.</p>
+
+                        <h3>Method 1: Router on a Stick</h3>
+                        <pre class="code">Router(config)# interface GigabitEthernet0/1
+Router(config-if)# no ip address
+Router(config-if)# no shutdown
+
+Router(config)# interface GigabitEthernet0/1.10
+Router(config-subif)# encapsulation dot1Q 10
+Router(config-subif)# ip address 192.168.10.1 255.255.255.0
+
+Router(config)# interface GigabitEthernet0/1.20
+Router(config-subif)# encapsulation dot1Q 20
+Router(config-subif)# ip address 192.168.20.1 255.255.255.0</pre>
+
+                        <h3>Method 2: Switch Virtual Interfaces (SVI)</h3>
+                        <pre class="code">Switch(config)# ip routing
+Switch(config)# interface vlan 10
+Switch(config-if)# ip address 192.168.10.1 255.255.255.0
+Switch(config-if)# no shutdown</pre>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Lesson 8: Best Practices -->
+            <article class="lesson" id="lesson8" data-lesson="8">
+                <div class="card animated">
+                    <h2>📋 Lesson 8: VLAN Design Best Practices</h2>
+                    <div class="lesson-content">
+                        <h3>VLAN Planning</h3>
+                        <div class="planning-grid">
+                            <div class="plan-item">
+                                <h4>Documentation</h4>
+                                <p>Maintain VLAN ID assignments and naming conventions</p>
+                            </div>
+                            <div class="plan-item">
+                                <h4>VLAN Ranges</h4>
+                                <p>1-99: Infrastructure<br>
+                                    100-199: User VLANs<br>
+                                    200-299: Voice VLANs<br>
+                                    300-399: Guest/DMZ</p>
+                            </div>
+                            <div class="plan-item">
+                                <h4>Naming</h4>
+                                <p>Use descriptive names: SALES_VLAN, ENG_VLAN</p>
+                            </div>
+                        </div>
+
+                        <h3>Security Best Practices</h3>
+                        <ol>
+                            <li>Change default native VLAN</li>
+                            <li>Prune unnecessary VLANs from trunks</li>
+                            <li>Disable unused ports</li>
+                            <li>Implement VLAN access control</li>
+                        </ol>
+
+                        <h3>Performance Considerations</h3>
+                        <ul>
+                            <li>Right-size VLANs (avoid too large broadcast domains)</li>
+                            <li>Strategic trunk placement</li>
+                            <li>Load balancing across multiple trunks</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Lesson 9: Troubleshooting -->
+            <article class="lesson" id="lesson9" data-lesson="9">
+                <div class="card animated">
+                    <h2>🔧 Lesson 9: Troubleshooting VLANs</h2>
+                    <div class="lesson-content">
+                        <h3>Common Issues</h3>
+
+                        <div class="troubleshoot-issue">
+                            <h4>1. VLAN Mismatch</h4>
+                            <p><strong>Symptoms:</strong> No connectivity between switches</p>
+                            <p><strong>Cause:</strong> Different native VLANs on trunk ends</p>
+                            <pre class="code">! Check and fix
+show interfaces trunk
+switchport trunk native vlan 99</pre>
+                        </div>
+
+                        <div class="troubleshoot-issue">
+                            <h4>2. Missing VLAN on Trunk</h4>
+                            <p><strong>Symptoms:</strong> VLAN works locally but not across trunk</p>
+                            <pre class="code">! Add missing VLAN
+switchport trunk allowed vlan add 30</pre>
+                        </div>
+
+                        <div class="troubleshoot-issue">
+                            <h4>3. Wrong Access VLAN</h4>
+                            <p><strong>Symptoms:</strong> Device can't communicate with VLAN members</p>
+                            <pre class="code">! Check and correct
+show interfaces Fa0/5 switchport
+switchport access vlan 10</pre>
+                        </div>
+
+                        <h3>Troubleshooting Toolkit</h3>
+                        <pre class="code">show vlan brief
+show interfaces trunk
+show mac address-table
+show spanning-tree vlan [number]
+debug sw-vlan packets</pre>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Lesson 10: Labs & Quiz -->
+            <article class="lesson" id="lesson10" data-lesson="10">
+                <div class="card animated">
+                    <h2>🧪 Lesson 10: Hands-On Labs & Final Quiz</h2>
+
+                    <div class="labs-section">
+                        <h3>Interactive Problems</h3>
+
+                        <div class="problem">
+                            <h4>Problem 1: VLAN Isolation</h4>
+                            <p>Host A is in VLAN 10 (192.168.10.5) and Host B is in VLAN 20 (192.168.20.5). Both are
+                                connected to the same switch. Can Host A ping Host B by default?</p>
+                            <div class="options">
+                                <button class="btn small" data-answer="no">No - Different VLANs cannot
+                                    communicate</button>
+                                <button class="btn small" data-answer="yes">Yes - Same physical network</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="problem">
+                            <h4>Problem 2: Trunk Configuration</h4>
+                            <p>You need to configure a trunk between two switches that should only carry VLANs 10, 20,
+                                and 99 (native). Write the command:</p>
+                            <input placeholder="switchport trunk allowed vlan ..." id="trunkCmd" />
+                            <button class="btn" id="checkTrunk">Check Answer</button>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+
+                        <div class="problem">
+                            <h4>Problem 3: Native VLAN Security</h4>
+                            <p>What is the main security risk of using VLAN 1 as the native VLAN?</p>
+                            <div class="options">
+                                <button class="btn small" data-answer="correct">Management traffic exposure and VLAN
+                                    hopping</button>
+                                <button class="btn small" data-answer="wrong">Slower network performance</button>
+                                <button class="btn small" data-answer="wrong">Higher configuration complexity</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-section">
+                        <h3>📝 Final Comprehensive Quiz</h3>
+                        <div id="quizRoot"></div>
+                        <div class="quiz-controls">
+                            <button class="btn" id="prevQ">← Previous</button>
+                            <button class="btn primary" id="nextQ">Next →</button>
+                            <button class="btn success" id="submitQuiz">Submit Quiz</button>
+                        </div>
+                        <div id="quizResult" class="result" aria-live="polite"></div>
+                    </div>
+                </div>
+            </article>
 
         </section>
 
+
         <footer class="footer">
-            <small>Made with ❤️ — Tiny Tutorial™</small>
+            <small>Tiny Tutorial™ - Comprehensive VLAN Learning Experience</small>
         </footer>
     </main>
 
